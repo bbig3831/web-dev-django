@@ -17,12 +17,18 @@ class TagSerializer(HyperlinkedModelSerializer):
         }
 
 
-class StartupSerializer(ModelSerializer):
+class StartupSerializer(HyperlinkedModelSerializer):
     """Serializer for startups"""
 
     class Meta:
         model = Startup
         fields = '__all__'
+        extra_kwargs = {
+            'url': {
+                'lookup_field': 'slug',
+                'view_name': 'api-startup-detail'
+            }
+        }
 
     tags = TagSerializer(many=True)
 

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from .serializers import TagSerializer, StartupSerializer
-from .models import Tag, Startup
+from .serializers import TagSerializer, StartupSerializer, NewsLinkSerializer
+from .models import Tag, Startup, NewsLink
 
 
 class TagApiDetail(RetrieveAPIView):
@@ -32,3 +32,33 @@ class StartupAPIList(ListAPIView):
 
     queryset = Startup.objects.all()
     serializer_class = StartupSerializer
+
+
+class NewsLinkAPIDetail(RetrieveAPIView):
+    """Return JSON for single NewsLink object"""
+
+    queryset = NewsLink.objects.all()
+    serializer_class = NewsLinkSerializer
+
+    def get_object(self):
+        """Override DRF's generic method"""
+        startup_slug = self.kwargs.get('startup_slug')
+        newslink_slug = self.kwargs.get('newslink_slug')
+        queryset = self.filter_queryset(self.get_queryset())
+
+        newslink = get_object_or_404(
+            queryset,
+            slug=newslink_slug,
+            startup__slug=startup_slug
+        )
+        self.check_object_permissions(
+            self.request, newslink
+        )
+        return newslink
+
+
+class NewsLinkAPIList(ListAPIView):
+    """Return JSON for multiple NewsLink objects"""
+
+    queryset =  NewsLink.objects.all()
+    serializer_class = NewsLinkSerializer

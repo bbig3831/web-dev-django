@@ -1,3 +1,10 @@
+{% extends parent_template | default:"tag/base.html" %}
+
+{% block title %}
+  {{ block.super }} - {{ tag.name | title }}
+{% endblock %}
+
+{% block content %}
 {% if tag.startup_set.all %}
   <section>
     <h3>Startup{{ tag.startup_set.count | pluralize }}</h3>
@@ -15,3 +22,4 @@
     </ul>
   </section>
 {% endif %}
+{% endblock %}

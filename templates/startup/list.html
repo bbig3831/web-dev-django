@@ -1,3 +1,10 @@
+{% extends parent_template | default:"startup/base.html" %}
+
+{% block title %}
+  Startup Organizer - Startup List
+{% endblock %}
+
+{% block content %}
 <h2>Startup List</h2>
 <ul>
   {% for startup in startup_list %}
@@ -8,3 +15,4 @@
     <li><em>No startups available</em></li>
   {% endfor %}
 </ul>
+{% endblock %}

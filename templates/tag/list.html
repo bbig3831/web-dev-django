@@ -1,3 +1,10 @@
+{% extends parent_template | default:"tag/base.html" %}
+
+{% block title %}
+  Startup Organizer - Tag List
+{% endblock %}
+
+{% block content %}
 <ul>
   {% for tag in tag_list %}
     <li>
@@ -9,3 +16,4 @@
     <p><em>There are currently no Tags available</em></p>
   {% endfor %}
 </ul>
+{% endblock %}

@@ -1,7 +1,22 @@
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView, DetailView
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .serializers import TagSerializer, StartupSerializer, NewsLinkSerializer
 from .models import Tag, Startup, NewsLink
+
+
+class TagList(ListView):
+    """Display a list of Tags"""
+
+    queryset = Tag.objects.all()
+    template_name = 'tag/list.html'
+
+
+class TagDetail(DetailView):
+    """Display a single Tag"""
+
+    queryset = Tag.objects.all()
+    template_name = 'tag/detail.html'
 
 
 class TagApiDetail(RetrieveAPIView):
